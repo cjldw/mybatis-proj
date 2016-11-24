@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.superwen.mappers.UserInfoMapper2">
+    <resultMap id="UserInfoResult" type="com.superwen.dataobject.UserInfoRO">
+        <id column="u_id" property="id" />
+        <result column="u_username" property="username" />
+        <result column="u_email" property="email" />
+        <collection property="posts" column="id" ofType="com.superwen.dataobject.PostRO">
+            <id column="p_id" property="id" />
+            <result column="p_user_id" property="userId" />
+            <result column="p_title" property="title" />
+            <result column="p_contents" property="contents" />
+        </collection>
+    </resultMap>
+
+    <select id="findById" resultMap="UserInfoResult">
+        select
+          u.id as u_id,
+          u.username as u_username,
+          u.email as u_email,
+          p.id as p_id,
+          p.user_id as p_user_id,
+          p.title as p_title,
+          p.contents as p_contents
+        from `user` as u
+        left outer join post as p on u.id = p.user_id
+                where u.id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superwen.mappers.UserMapper">
+    <sql id="columns">
+          id, username, auth_key, password_hash, password_reset_token, email, status, created_at, updated_at
+    </sql>
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.superwen.dataobject.UserRO">
+        SELECT
+        <include refid="columns" />
+        FROM user
+        WHERE id=#{id}
+    </select>
+</mapper>
